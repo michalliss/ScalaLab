@@ -5,7 +5,7 @@ case object Empty extends BT[Nothing]
 
 case class Node[+A](elem: A, left: BT[A], right: BT[A]) extends BT[A]
 
-def breadthBT[A](tt: BT[A]) = {
+def breadthBTtail[A](tt: BT[A]) = {
   def breadthBTHelper[A](queue: List[BT[A]], resList: List[A]): List[A] = {
     queue match {
       case Nil => resList.reverse
@@ -15,6 +15,19 @@ def breadthBT[A](tt: BT[A]) = {
   }
 
   breadthBTHelper(List(tt), List())
+}
+
+
+def breadthBT[A](tt: BT[A]) = {
+  def breadthBTHelper[A](queue: List[BT[A]]): List[A] = {
+    queue match {
+      case Nil => Nil
+      case Empty :: t => breadthBTHelper(t)
+      case Node(value, left, right) :: t => value :: breadthBTHelper(t ::: List(left, right))
+    }
+  }
+
+  breadthBTHelper(List(tt))
 }
 
 val tt = Node(1,
@@ -80,10 +93,10 @@ case class Graph[A](succ: A => List[A]) extends Graphs[A]
 
 val g = Graph((i: Int) => i match {
   case 0 => List(3)
-  case 1 => List(0,2,4)
+  case 1 => List(0, 2, 4)
   case 2 => List(1)
   case 3 => Nil
-  case 4 => List(0,2)
+  case 4 => List(0, 2)
   case n => throw new Exception("Graph g: node " + n
     + " doesn't exist")
 })
@@ -97,6 +110,7 @@ def depthSearch[A](gfunc: Graph[A])(start: A) = {
       case h :: t => if (visited.contains(h)) depthSearchHelp(visited, t) else h :: depthSearchHelp(h :: visited, (gfunc succ h) ::: t)
     }
   }
+
   depthSearchHelp(List(), List(start))
 }
 

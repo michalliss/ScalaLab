@@ -118,3 +118,12 @@ object UzycieWyjatkow{
 }
 
 UzycieWyjatkow.main(null)
+
+/*
+Wyjatek zgloszony w metoda3
+java.lang.Exception: Wyjatek zgloszony w metoda3
+at $line12.$read$$iw$$iw$UzycieWyjatkow$.metoda3(<console>:24)
+at $line12.$read$$iw$$iw$UzycieWyjatkow$.metoda2(<console>:19)
+at $line12.$read$$iw$$iw$UzycieWyjatkow$.metoda1(<console>:14)
+at $line12.$read$$iw$$iw$UzycieWyjatkow$.main(<console>:4)
+ */

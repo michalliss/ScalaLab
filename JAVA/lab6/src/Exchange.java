@@ -13,11 +13,11 @@ public class Exchange {
     }
 
     Dollar francToDollar(Franc franc) {
-        return new Dollar(franc.getAmount() * FtD);
+        return new Dollar(franc.getAmount() / FtD);
     }
 
     Franc dollarToFranc(Dollar dollar) {
-        return new Franc(dollar.getAmount() * DtF);
+        return new Franc(dollar.getAmount() / DtF);
     }
 
 

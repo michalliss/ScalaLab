@@ -7,5 +7,7 @@ public class Main {
         System.out.println(franc.getAmount());
         Dollar dollar2 = exchange.francToDollar(franc);
         System.out.println(dollar2.getAmount());
+        
     }
+
 }

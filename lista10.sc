@@ -1,20 +1,23 @@
-class CQueue[+T] private(private val xys: (List[T], List[T])) {
-  def toNormal[S >: T](xs: List[S], ys: List[S]) = (xs, ys) match {
-    case (Nil, ys) => new CQueue[S](ys.reverse, Nil)
-    case queue => new CQueue((xs, ys));
-  }
 
+class CQueue[+T] private(private val xys: (List[T], List[T])) {
   def enqueue[S >: T](x: S): CQueue[S] = {
     val (xs, ys) = xys;
-    toNormal(xs, x :: ys)
+
+    (xs, x :: ys) match {
+      case (Nil, ys) => new CQueue[S](ys.reverse, Nil)
+      case (xs, ys) => new CQueue((xs, ys));
+    }
   }
 
   def dequeue(): CQueue[T] = xys match {
     case (Nil, _) => this
-    case (h :: t, ys) => toNormal(t, ys)
+    case (_ :: t, ys) => (t, ys) match {
+      case (Nil, ys) => new CQueue[T](ys.reverse, Nil)
+      case (xs, ys) => new CQueue((xs, ys));
+    }
   }
 
-  def first[S >: T]: T = xys match {
+  def first(): T = xys match {
     case (Nil, _) => throw new Exception
     case (h :: t, _) => h
   }
@@ -25,14 +28,28 @@ class CQueue[+T] private(private val xys: (List[T], List[T])) {
 }
 
 object CQueue {
+  def apply[T](x: T*) = new CQueue(x.toList, Nil)
+
   def empty[T]() = new CQueue[T]((Nil, Nil));
 }
 
-val t = CQueue.empty();
+val t = CQueue(4, 3);
 var t2 = t.enqueue(5);
 t2 = t2.enqueue(6);
 t2 = t2.enqueue(7);
-t2.print
+t2.first()
+t2 = t2.dequeue()
+t2.first()
 
 
 
+
+import scala.collection.mutable
+
+def copy[T](src: mutable.Seq[T], dest: mutable.Seq[T]) = {
+    var counter = 0
+    src.foreach(elem =>{
+      dest.update(counter, elem)
+      counter += 1
+    })
+}

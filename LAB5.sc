@@ -11,7 +11,7 @@ trait Debug {
     for(e <- f){
       e.setAccessible(true)
       try{
-        s = s + e.getName + "->" + e.getAnnotatedType + " = " + e.get(this) + "\n"
+        s = s + e.getName + " -> " + e.getType + " = " + e.get(this) + "\n"
       }catch{
         case e: Exception => " "
       }

@@ -1,3 +1,5 @@
+package zad1
+
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSystem, Props}
 
 import scala.util.Random
@@ -35,13 +37,3 @@ object Main extends App {
 
 }
 
-
-object Main2 extends App {
-  val system = ActorSystem();
-  val players1
-  val player1: ActorRef = system.actorOf(Props(classOf[Player2], "ping", Arra))
-  val player2: ActorRef = system.actorOf(Props(classOf[Player2], "pong"))
-
-  player1.tell(0, player2);
-
-}
